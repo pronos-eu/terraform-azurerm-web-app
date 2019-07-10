@@ -1,13 +1,11 @@
-resource "azurerm_resource_group" "resource_group" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
+data "azurerm_resource_group" "app_resource_group" {
+  name = var.resource_group_name
 }
 
 resource "azurerm_app_service_plan" "app_plan" {
   name                = var.app_plan_name
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = data.azurerm_resource_group.app_resource_group.location
+  resource_group_name = data.azurerm_resource_group.app_resource_group.name
   kind                = var.app_kind
   tags                = var.tags
 
@@ -20,8 +18,8 @@ resource "azurerm_app_service_plan" "app_plan" {
 resource "azurerm_app_service" "web_app" {
   count               = length(var.app_names)
   name                = var.app_names[count.index]
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = data.azurerm_resource_group.app_resource_group.location
+  resource_group_name = data.azurerm_resource_group.app_resource_group.name
   app_service_plan_id = azurerm_app_service_plan.app_plan.id
   tags                = var.tags
   app_settings        = var.app_settings[count.index]
