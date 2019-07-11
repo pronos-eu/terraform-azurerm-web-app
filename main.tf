@@ -30,4 +30,10 @@ resource "azurerm_app_service" "web_app" {
     use_32_bit_worker_process = var.use_32_bit_worker_process
     scm_type                  = var.scm_type[count.index]
   }
+
+  lifecycle {
+    ignore_changes = [
+      site_config.0.scm_type
+    ]
+  }
 }

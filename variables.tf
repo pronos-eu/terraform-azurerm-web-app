@@ -52,7 +52,7 @@ variable "use_32_bit_worker_process" {
 variable "app_settings" {
   type        = list
   description = "List of application settings to set on deploy."
-  default     = []
+  default     = [null]
 }
 
 variable "scm_type" {
