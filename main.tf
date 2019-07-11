@@ -30,4 +30,9 @@ resource "azurerm_app_service" "web_app" {
     use_32_bit_worker_process = var.use_32_bit_worker_process
     scm_type                  = var.scm_type[count.index]
   }
+
+  source_control {
+    repo_url = var.repo_url
+    branch   = var.branch
+  }
 }

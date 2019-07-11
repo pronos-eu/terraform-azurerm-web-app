@@ -61,6 +61,14 @@ variable "scm_type" {
   default     = [null]
 }
 
+variable "repo_url" {
+  default = null
+}
+
+variable "branch" {
+  default = null
+}
+
 variable "tags" {
   type        = "map"
   description = "Map of tags to assign to resources"
