@@ -55,6 +55,12 @@ variable "app_settings" {
   default     = []
 }
 
+variable "scm_type" {
+  type        = list(string)
+  description = "SCM Type for app."
+  default     = [null]
+}
+
 variable "tags" {
   type        = "map"
   description = "Map of tags to assign to resources"

@@ -28,5 +28,6 @@ resource "azurerm_app_service" "web_app" {
     always_on                 = true
     websockets_enabled        = var.websockets_enabled[count.index]
     use_32_bit_worker_process = var.use_32_bit_worker_process
+    scm_type                  = var.scm_type[count.index]
   }
 }
