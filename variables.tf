@@ -62,7 +62,7 @@ variable "scm_type" {
 }
 
 variable "default_documents" {
-  type        = list(string)
+  type        = list
   description = "List of default documents to load if not specified in address of web app"
   default     = [null]
 }
