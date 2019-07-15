@@ -61,6 +61,12 @@ variable "scm_type" {
   default     = [null]
 }
 
+variable "default_documents" {
+  type        = list(string)
+  description = "List of default documents to load if not specified in address of web app"
+  default     = [null]
+}
+
 variable "tags" {
   type        = "map"
   description = "Map of tags to assign to resources"
