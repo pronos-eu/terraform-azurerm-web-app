@@ -43,6 +43,12 @@ variable "websockets_enabled" {
   default     = [false]
 }
 
+variable "always_on" {
+  type        = list(bool)
+  description = "Determines if application should be always on"
+  default     = [false]
+}
+
 variable "use_32_bit_worker_process" {
   type        = bool
   description = "When using an App Service Plan in the Free or Shared Tiers use_32_bit_worker_process must be set to true."
@@ -52,12 +58,18 @@ variable "use_32_bit_worker_process" {
 variable "app_settings" {
   type        = list
   description = "List of application settings to set on deploy."
-  default     = []
+  default     = [null]
 }
 
 variable "scm_type" {
   type        = list(string)
   description = "SCM Type for app."
+  default     = [null]
+}
+
+variable "default_documents" {
+  type        = list
+  description = "List of default documents to load if not specified in address of web app"
   default     = [null]
 }
 
