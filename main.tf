@@ -25,7 +25,7 @@ resource "azurerm_app_service" "web_app" {
   app_settings        = var.app_settings[count.index]
 
   site_config {
-    always_on                 = true
+    always_on                 = var.always_on[count.index]
     websockets_enabled        = var.websockets_enabled[count.index]
     use_32_bit_worker_process = var.use_32_bit_worker_process
     scm_type                  = var.scm_type[count.index]

@@ -18,8 +18,6 @@ output "web_apps_hostnames" {
   value = azurerm_app_service.web_app.*.default_site_hostname
 }
 
-
-
 output "web_apps_site_credentials" {
   value = azurerm_app_service.web_app.*.site_credential
 }

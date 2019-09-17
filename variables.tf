@@ -43,6 +43,12 @@ variable "websockets_enabled" {
   default     = [false]
 }
 
+variable "always_on" {
+  type        = list(bool)
+  description = "Determines if application should be always on"
+  default     = [false]
+}
+
 variable "use_32_bit_worker_process" {
   type        = bool
   description = "When using an App Service Plan in the Free or Shared Tiers use_32_bit_worker_process must be set to true."
