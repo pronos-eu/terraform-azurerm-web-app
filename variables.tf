@@ -21,7 +21,7 @@ variable "apps" {
 
 variable "app_kind" {
   type        = string
-  description = "Kind of app service plan."
+  description = "Kind of app service plan"
   default     = "Windows"
 }
 
