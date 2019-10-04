@@ -1,23 +1,25 @@
-output "web_apps_ids" {
-  value = azurerm_app_service.web_app.*.id
+output "apps" {
+  description = "Map of deployed web applications"
+  value = {
+    for a in azurerm_app_service.main :
+    a.id => {
+      id                             = a.id
+      default_site_hostname          = a.default_site_hostname
+      outbound_ip_addresses          = a.outbound_ip_addresses
+      possible_outbound_ip_addresses = a.possible_outbound_ip_addresses
+      identity                       = a.identity
+    }
+  }
 }
 
-output "web_apps_names" {
-  value = azurerm_app_service.web_app.*.name
-}
-
-output "web_apps_outbound_ips" {
-  value = azurerm_app_service.web_app.*.outbound_ip_addresses
-}
-
-output "web_apps_possible_outbound_ips" {
-  value = azurerm_app_service.web_app.*.possible_outbound_ip_addresses
-}
-
-output "web_apps_hostnames" {
-  value = azurerm_app_service.web_app.*.default_site_hostname
-}
-
-output "web_apps_site_credentials" {
-  value = azurerm_app_service.web_app.*.site_credential
+output "site_credentials" {
+  description = "Map of site credentials for applications"
+  sensitive   = true
+  value = {
+    for a in azurerm_app_service.main :
+    a.id => {
+      id              = a.id
+      site_credential = a.site_credential
+    }
+  }
 }

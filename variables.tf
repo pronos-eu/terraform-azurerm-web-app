@@ -14,71 +14,38 @@ variable "location" {
   default     = "northeurope"
 }
 
-variable "app_kind" {
-  type    = string
-  default = "Windows"
-}
-
-variable "sku_tier" {
-  type    = string
-  default = "Standard"
-}
-
-variable "sku_size" {
-  type    = string
-  default = "S1"
-}
-
 variable "apps" {
-  type        = map(string)
+  type        = any
   description = "Map of application and its settings"
 }
 
-variable "app_names" {
-  type        = list(string)
-  description = "List of app names to create."
-  default     = ["web-app"]
+variable "app_kind" {
+  type        = string
+  description = "Kind of app service plan."
+  default     = "Windows"
 }
 
-variable "websockets_enabled" {
-  type        = list(bool)
-  description = "Determines if websockets should be enabled for web apps"
-  default     = [false]
+variable "sku_tier" {
+  type        = string
+  description = "Specifies the plan's pricing tier"
+  default     = "Free"
 }
 
-variable "always_on" {
-  type        = list(bool)
-  description = "Determines if application should be always on"
-  default     = [false]
+variable "sku_size" {
+  type        = string
+  description = "Specifies the plan's instance size"
+  default     = "F1"
 }
 
-variable "use_32_bit_worker_process" {
-  type        = bool
-  description = "When using an App Service Plan in the Free or Shared Tiers use_32_bit_worker_process must be set to true."
-  default     = true
+variable "sku_capacity" {
+  type        = string
+  description = "Specifies number of workers associated with this App Service Plan"
+  default     = null
 }
 
-variable "app_settings" {
-  type        = list
-  description = "List of application settings to set on deploy."
-  default     = [null]
-}
-
-variable "scm_type" {
-  type        = list(string)
-  description = "SCM Type for app."
-  default     = [null]
-}
-
-variable "default_documents" {
-  type        = list
-  description = "List of default documents to load if not specified in address of web app"
-  default     = [null]
-}
 
 variable "tags" {
   type        = "map"
   description = "Map of tags to assign to resources"
   default     = {}
 }
-
