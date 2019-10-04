@@ -1,11 +1,11 @@
-data "azurerm_resource_group" "app_resource_group" {
+data "azurerm_resource_group" "main" {
   name = var.resource_group_name
 }
 
-resource "azurerm_app_service_plan" "app_plan" {
+resource "azurerm_app_service_plan" "main" {
   name                = var.app_plan_name
-  location            = data.azurerm_resource_group.app_resource_group.location
-  resource_group_name = data.azurerm_resource_group.app_resource_group.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   kind                = var.app_kind
   tags                = var.tags
 
@@ -15,21 +15,21 @@ resource "azurerm_app_service_plan" "app_plan" {
   }
 }
 
-resource "azurerm_app_service" "web_app" {
-  count               = length(var.app_names)
-  name                = var.app_names[count.index]
-  location            = data.azurerm_resource_group.app_resource_group.location
-  resource_group_name = data.azurerm_resource_group.app_resource_group.name
-  app_service_plan_id = azurerm_app_service_plan.app_plan.id
-  tags                = var.tags
-  app_settings        = var.app_settings[count.index]
+resource "azurerm_app_service" "main" {
+  for_each            = var.apps
+  name                = lookup(each.value, "name")
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  app_service_plan_id = azurerm_app_service_plan.main.id
+  tags                = "${merge(var.tags, lookup(each.value, "tags", {}))}"
+  app_settings        = lookup(each.value, "app_settings", {})
 
   site_config {
-    always_on                 = var.always_on[count.index]
-    websockets_enabled        = var.websockets_enabled[count.index]
-    use_32_bit_worker_process = var.use_32_bit_worker_process
-    scm_type                  = var.scm_type[count.index]
-    default_documents         = var.default_documents[count.index]
+    always_on                 = lookup(each.value, "always_on", "false")
+    websockets_enabled        = lookup(each.value, "websockets_enabled", "false")
+    use_32_bit_worker_process = lookup(each.value, "use_32_bit_worker_process", "true")
+    scm_type                  = lookup(each.value, "scm_type", "None")
+    default_documents         = lookup(each.value, "default_documents", [])
   }
 
   lifecycle {
