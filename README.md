@@ -1,6 +1,6 @@
 # Terraform AzureRM Web App Module
 
-Description will be written later
+Terraform module to deploy 1+ web apps under one service plan.
 
 ---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
