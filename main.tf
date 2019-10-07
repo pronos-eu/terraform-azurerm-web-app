@@ -4,7 +4,7 @@ data "azurerm_resource_group" "main" {
 
 resource "azurerm_app_service_plan" "main" {
   name                = var.app_plan_name
-  location            = data.azurerm_resource_group.main.location
+  location            = coalesce(var.location, data.azurerm_resource_group.main.location)
   resource_group_name = data.azurerm_resource_group.main.name
   kind                = var.app_kind
   tags                = var.tags
@@ -18,7 +18,7 @@ resource "azurerm_app_service_plan" "main" {
 resource "azurerm_app_service" "main" {
   for_each            = var.apps
   name                = lookup(each.value, "name")
-  location            = data.azurerm_resource_group.main.location
+  location            = coalesce(var.location, data.azurerm_resource_group.main.location)
   resource_group_name = data.azurerm_resource_group.main.name
   app_service_plan_id = azurerm_app_service_plan.main.id
   tags                = "${merge(var.tags, lookup(each.value, "tags", {}))}"

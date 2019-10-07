@@ -10,8 +10,8 @@ variable "app_plan_name" {
 
 variable "location" {
   type        = string
-  description = "Azure region where resources will be created"
-  default     = "northeurope"
+  description = "Azure region where resources will be created. By default in the same region as Resource Group"
+  default     = null
 }
 
 variable "apps" {
